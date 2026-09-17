@@ -34,31 +34,33 @@ Mức hoàn thành: ✅ xong **và đã qua review** · 🟡 đang làm (ghi %) 
 
 - Đã gán: 100 / 100 frame (4 job × 25), xong 21h 16/09
 - Qua review lần đầu: 3/4 job (1418, 1422, 1424) xong ~22h30 16/09; job 1420 Chi mở 106 issue, Nam đang sửa (review xong 9h 17/09)
-- Edge case mới / đã chốt: [P-004](../problem-backlog.md#p-004) — 🔴 Mở (P-001–P-003 là template, không phải backlog đội)
+- Edge case mới / đã chốt: [P-004](../problem-backlog.md#p-004) … [P-008](../problem-backlog.md#p-008) — 🔴 Mở (P-001–P-003 là template, không phải backlog đội)
 
 ## Vướng mắc
 
 - [P-004](../problem-backlog.md#p-004): cùng guideline G01, annotator chọn khác loại shape (bbox / polygon / polyline) — chưa chốt QĐ.
+- [P-005](../problem-backlog.md#p-005)–[P-008](../problem-backlog.md#p-008): ca khó tin nhắn đội (tối/xa, class xe, đường phía trong, crosswalk) — 🔴 Mở.
 - Job 1420: 106 issue sau review; Nam đang sửa. Đây là lý do review chéo Chi–Nam kéo đến 9h 17/09.
 
 ### Ca khó (tin nhắn đội, kèm link CVAT)
 
-**Nam — job 1420**
+**[P-005](../problem-backlog.md#p-005)** — frame tối / xe xa
 
-- [frame 30](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=30)
-- [frame 34](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=34) — quá tối
-- [frame 49](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=49) — nhiều xe, tối, khó xác định
+- Nam job 1420: [frame 30](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=30); [frame 34](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=34) quá tối; [frame 49](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=49) nhiều xe, tối
+- Thành job 1422: [frame 70](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1422?frame=70) — xe xa vẫn gán `car`
 
-**Thành — job 1422**
+**[P-006](../problem-backlog.md#p-006)** — class xe
 
-- [frame 70](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1422?frame=70) — xe ở xa, không đủ bằng chứng class nhưng vẫn gán `car`
+- Chi job 1418: [frame 9](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=9) — xe chở 2 xe con, không chắc `truck`
+- Chi job 1418 — van vs `car` vs `truck` (ảnh taxi vàng + xe van trắng; tin nhắn chưa ghi số frame)
 
-**Chi — job 1418**
+**[P-007](../problem-backlog.md#p-007)** — đường phía trong
 
-- [frame 9](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=9) — xe chở 2 xe con, không chắc có phải `truck`
-- [frame 24](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=24) — đường phía trong label gì
-- [frame 0](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=0) / [frame 13](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=13) — quy ước vẽ crosswalk
-- job 1418 — van vs `car` vs `truck` (ảnh taxi vàng + xe van trắng; tin nhắn chưa ghi số frame)
+- Chi job 1418: [frame 24](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=24)
+
+**[P-008](../problem-backlog.md#p-008)** — vẽ crosswalk
+
+- Chi job 1418: [frame 0](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=0) / [frame 13](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=13)
 
 ## Kế hoạch đợt 2 tuần 1
 
