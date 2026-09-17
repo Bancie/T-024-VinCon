@@ -41,6 +41,25 @@ Mức hoàn thành: ✅ xong **và đã qua review** · 🟡 đang làm (ghi %) 
 - [P-004](../problem-backlog.md#p-004): cùng guideline G01, annotator chọn khác loại shape (bbox / polygon / polyline) — chưa chốt QĐ.
 - Job 1420: 106 issue sau review; Nam đang sửa. Đây là lý do review chéo Chi–Nam kéo đến 9h 17/09.
 
+### Ca khó (tin nhắn đội, kèm link CVAT)
+
+**Nam — job 1420**
+
+- [frame 30](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=30)
+- [frame 34](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=34) — quá tối
+- [frame 49](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1420?frame=49) — nhiều xe, tối, khó xác định
+
+**Thành — job 1422**
+
+- [frame 70](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1422?frame=70) — xe ở xa, không đủ bằng chứng class nhưng vẫn gán `car`
+
+**Chi — job 1418**
+
+- [frame 9](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=9) — xe chở 2 xe con, không chắc có phải `truck`
+- [frame 24](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=24) — đường phía trong label gì
+- [frame 0](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=0) / [frame 13](https://cvat.note.transformerlabs.ai/tasks/142/jobs/1418?frame=13) — quy ước vẽ crosswalk
+- job 1418 — van vs `car` vs `truck` (ảnh taxi vàng + xe van trắng; tin nhắn chưa ghi số frame)
+
 ## Kế hoạch đợt 2 tuần 1
 
 - Fix issue BBox đợt 1 (job 1420 / 106 issue).
