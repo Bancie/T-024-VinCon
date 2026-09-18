@@ -1,0 +1,35 @@
+labels:
+  - id: 0
+    name: person
+    prompt: person
+    type: mask
+  - id: 1
+    name: bicycle
+    prompt: bicycle
+    type: mask
+  - id: 2
+    name: car
+    prompt: car
+    type: mask
+  - id: 3
+    name: motorcycle
+    prompt: motorcycle
+    type: mask
+  - id: 4
+    name: bus
+    prompt: bus
+    type: mask
+  - id: 5
+    name: truck
+    prompt: truck
+    type: mask
+  - id: 6
+    name: building
+    prompt: building
+    type: mask
+
+# CVAT label name -> SAM 3 English prompt when they differ
+prompts:
+  nguoi: person
+  xe_may: motorcycle
+  oto: car

@@ -33,7 +33,7 @@ Thêm tool thì thêm một dòng vào bảng:
 
 | Tool | Giải quyết | Người viết | Trạng thái |
 |---|---|---|---|
-| *(chưa có)* |  |  |  |
+| [gpu_integrate](gpu_integrate/) | SAM 3 trên GPU Modal, gắn CVAT local qua Nuclio (không đụng SAM vit-h) | đội | sẵn dùng |
 
 ## Mẫu README cho từng tool
 
