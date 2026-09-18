@@ -29,6 +29,51 @@ def _modal_headers():
     return {"Modal-Key": key, "Modal-Secret": secret, "Content-Type": "application/json"}
 
 
+def _rle_to_detector_mask(rle, width, height):
+    """Rebuild CVAT detector mask from interactor RLE when Modal has no `mask` field."""
+    if not rle or width <= 0 or height <= 0:
+        return []
+    counts = rle[:-4] if len(rle) >= 4 else rle
+    expected = width * height
+    pixels = []
+    val = 0
+    for count in counts:
+        n = int(count)
+        remaining = expected - len(pixels)
+        if remaining <= 0:
+            break
+        if n > 0:
+            take = n if n <= remaining else remaining
+            pixels.extend([val] * take)
+        val = 1 - val
+    if len(pixels) < expected:
+        pixels.extend([0] * (expected - len(pixels)))
+
+    xtl, ytl, xbr, ybr = width, height, -1, -1
+    for index, pixel in enumerate(pixels):
+        if not pixel:
+            continue
+        x = index % width
+        y = index // width
+        if x < xtl:
+            xtl = x
+        if y < ytl:
+            ytl = y
+        if x > xbr:
+            xbr = x
+        if y > ybr:
+            ybr = y
+    if xbr < 0 or xbr < xtl or ybr < ytl:
+        return []
+
+    crop = []
+    for y in range(ytl, ybr + 1):
+        row = y * width
+        crop.extend(pixels[row + xtl : row + xbr + 1])
+    crop.extend([xtl, ytl, xbr, ybr])
+    return crop
+
+
 def call_text(image_b64, prompts, threshold):
     url = os.environ.get("SAM3_MODAL_TEXT_URL", "").strip()
     if not url:
@@ -45,4 +90,8 @@ def call_text(image_b64, prompts, threshold):
     body = response.json()
     if not body.get("ok"):
         raise RuntimeError(body.get("error") or "SAM 3 text inference failed")
-    return body.get("objects") or []
+    return {
+        "objects": body.get("objects") or [],
+        "width": int(body.get("width") or 0),
+        "height": int(body.get("height") or 0),
+    }

@@ -1,6 +1,6 @@
 import json
 
-from model_handler import call_text, load_label_config
+from model_handler import _rle_to_detector_mask, call_text, load_label_config
 
 
 def init_context(context):
@@ -34,7 +34,10 @@ def handler(context, event):
             if prompt not in unique_prompts:
                 unique_prompts.append(prompt)
 
-        objects = call_text(image_b64, unique_prompts, threshold)
+        payload = call_text(image_b64, unique_prompts, threshold)
+        objects = payload.get("objects") or []
+        width = payload.get("width") or 0
+        height = payload.get("height") or 0
         results = []
         for obj in objects:
             prompt = obj.get("prompt")
@@ -57,8 +60,18 @@ def handler(context, event):
                     float(box[3]),
                 ]
             else:
-                entry["points"] = obj.get("rle") or []
+                detector_mask = obj.get("mask")
+                if not detector_mask:
+                    detector_mask = _rle_to_detector_mask(
+                        obj.get("rle") or [], width, height
+                    )
+                if not detector_mask:
+                    continue
                 entry["type"] = "mask"
+                entry["mask"] = detector_mask
+                polygon = obj.get("polygon") or []
+                if len(polygon) >= 6:
+                    entry["points"] = polygon
             results.append(entry)
 
         return context.Response(

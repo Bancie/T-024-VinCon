@@ -110,7 +110,11 @@ def main() -> int:
     objects = text_body.get("objects") or []
     print(f"text objects: {len(objects)}")
     for obj in objects[:5]:
-        print(f"  prompt={obj.get('prompt')} score={obj.get('score')} box={obj.get('box')}")
+        print(
+            f"  prompt={obj.get('prompt')} score={obj.get('score')} "
+            f"box={obj.get('box')} mask={len(obj.get('mask') or [])} "
+            f"polygon={len(obj.get('polygon') or [])}"
+        )
     print("ok")
     return 0
 

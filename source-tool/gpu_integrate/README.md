@@ -91,7 +91,8 @@ Sửa [`nuclio/sam3_detector/labels.yaml`](nuclio/sam3_detector/labels.yaml) và
 
 - Vào (interactor): ảnh + `pos_points` / `neg_points` / `obj_bbox` (protocol CVAT như IOG)
 - Vào (detector): ảnh; prompt = label (`nguoi` → `person` nếu có map)
-- Ra: mask RLE CVAT (IOG-style) hoặc rectangle `[x1,y1,x2,y2]`
+- Ra interactor: mask RLE CVAT (IOG-style)
+- Ra detector: `mask` bitmap crop + bbox (và `points` polygon nếu convert mask→poly)
 
 ## Giữ ấm GPU / chi phí
 

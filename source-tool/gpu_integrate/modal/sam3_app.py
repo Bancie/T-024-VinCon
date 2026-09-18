@@ -44,7 +44,7 @@ app = modal.App("sam3-cvat", image=image)
 
 
 def mask_to_cvat_rle(mask) -> list[int]:
-    """CVAT mask RLE (IOG-style): run lengths in row-major order + [0, 0, w-1, h-1]."""
+    """CVAT interactor mask RLE: run lengths in row-major order + [0, 0, w-1, h-1]."""
     import numpy as np
 
     arr = np.asarray(mask)
@@ -61,6 +61,47 @@ def mask_to_cvat_rle(mask) -> list[int]:
         rle.insert(0, 0)
     rle.extend([0, 0, width - 1, height - 1])
     return rle
+
+
+def mask_to_cvat_detector_mask(mask) -> list[int]:
+    """CVAT detector `mask`: flattened 0/1 crop + inclusive [xtl, ytl, xbr, ybr]."""
+    import numpy as np
+
+    arr = np.asarray(mask)
+    if arr.ndim > 2:
+        arr = arr.squeeze()
+    binary = (arr != 0).astype(np.uint8)
+    ys, xs = np.where(binary > 0)
+    if xs.size == 0:
+        return []
+    xtl, ytl, xbr, ybr = int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+    crop = binary[ytl : ybr + 1, xtl : xbr + 1].reshape(-1).astype(int).tolist()
+    crop.extend([xtl, ytl, xbr, ybr])
+    return crop
+
+
+def mask_to_polygon(mask) -> list[float]:
+    """Image-space polygon xy list for CVAT `conv_mask_to_poly`."""
+    import cv2
+    import numpy as np
+
+    binary = np.asarray(mask)
+    if binary.ndim > 2:
+        binary = binary.squeeze()
+    binary = (binary != 0).astype(np.uint8)
+    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if not contours:
+        return []
+    contour = max(contours, key=cv2.contourArea)
+    if cv2.contourArea(contour) < 4:
+        return []
+    approx = cv2.approxPolyDP(contour, 2.5, True)
+    pts = approx.reshape(-1, 2)
+    if len(pts) < 3:
+        pts = contour.reshape(-1, 2)
+    if len(pts) < 3:
+        return []
+    return pts.astype(float).ravel().tolist()
 
 
 def _decode_image(image_base64: str):
@@ -269,12 +310,17 @@ class Sam3Service:
                 if scores is not None:
                     s = scores[i]
                     score = float(s.item() if hasattr(s, "item") else s)
+                detector_mask = mask_to_cvat_detector_mask(binary)
+                if not detector_mask:
+                    continue
                 objects.append(
                     {
                         "prompt": prompt,
                         "score": score,
                         "box": box,
                         "rle": mask_to_cvat_rle(binary),
+                        "mask": detector_mask,
+                        "polygon": mask_to_polygon(binary),
                     }
                 )
 
