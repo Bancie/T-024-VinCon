@@ -1,35 +1,79 @@
+# 19 semantic classes — names match BTC CVAT labels exactly.
+# prompt: unique English phrases for SAM 3 (guideline confusion pairs).
 labels:
   - id: 0
-    name: person
-    prompt: person
+    name: road
+    prompt: asphalt road driving surface, not sidewalk
     type: mask
   - id: 1
-    name: bicycle
-    prompt: bicycle
+    name: sidewalk
+    prompt: pedestrian sidewalk pavement, not road
     type: mask
   - id: 2
-    name: car
-    prompt: car
+    name: building
+    prompt: building facade, not a standalone wall
     type: mask
   - id: 3
-    name: motorcycle
-    prompt: motorcycle
+    name: wall
+    prompt: standalone wall, not building and not fence
     type: mask
   - id: 4
-    name: bus
-    prompt: bus
+    name: fence
+    prompt: fence or railing, not a solid wall
     type: mask
   - id: 5
-    name: truck
-    prompt: truck
+    name: pole
+    prompt: utility pole or lamp post
     type: mask
   - id: 6
-    name: building
-    prompt: building
+    name: traffic_light
+    prompt: traffic light signal
     type: mask
-
-# CVAT label name -> SAM 3 English prompt when they differ
-prompts:
-  nguoi: person
-  xe_may: motorcycle
-  oto: car
+  - id: 7
+    name: traffic_sign
+    prompt: traffic sign or road sign
+    type: mask
+  - id: 8
+    name: vegetation
+    prompt: trees or bushes, not grass terrain
+    type: mask
+  - id: 9
+    name: terrain
+    prompt: grass soil ground, not trees
+    type: mask
+  - id: 10
+    name: sky
+    prompt: sky
+    type: mask
+  - id: 11
+    name: person
+    prompt: walking pedestrian or person standing, not on a vehicle
+    type: mask
+  - id: 12
+    name: rider
+    prompt: person riding a motorcycle or bicycle
+    type: mask
+  - id: 13
+    name: car
+    prompt: car or sedan or SUV, not truck or bus
+    type: mask
+  - id: 14
+    name: truck
+    prompt: truck or lorry, not car or bus
+    type: mask
+  - id: 15
+    name: bus
+    prompt: bus, not truck or car
+    type: mask
+  - id: 16
+    name: train
+    prompt: train or tram or locomotive
+    type: mask
+  - id: 17
+    name: motorcycle
+    prompt: motorcycle, not bicycle
+    type: mask
+  - id: 18
+    name: bicycle
+    prompt: bicycle, not motorcycle
+    type: mask
