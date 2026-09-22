@@ -1,5 +1,5 @@
 # Local agent skills — do not commit to GitHub
-.agents/skills/
+.agents/
 
 # Local Cursor IDE files
 .cursor/
