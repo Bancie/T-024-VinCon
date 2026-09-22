@@ -1,0 +1,78 @@
+# Copyright (C) CVAT.ai Corporation-style Nuclio detector (thin Modal proxy)
+# SPDX-License-Identifier: MIT
+
+metadata:
+  name: pth-modal-sam3-detector
+  namespace: cvat
+  annotations:
+    name: SAM 3 Concept (Modal)
+    version: "1"
+    type: detector
+    spec: |
+      [
+        { "id": 0, "name": "road", "type": "mask" },
+        { "id": 1, "name": "sidewalk", "type": "mask" },
+        { "id": 2, "name": "building", "type": "mask" },
+        { "id": 3, "name": "wall", "type": "mask" },
+        { "id": 4, "name": "fence", "type": "mask" },
+        { "id": 5, "name": "pole", "type": "mask" },
+        { "id": 6, "name": "traffic_light", "type": "mask" },
+        { "id": 7, "name": "traffic_sign", "type": "mask" },
+        { "id": 8, "name": "vegetation", "type": "mask" },
+        { "id": 9, "name": "terrain", "type": "mask" },
+        { "id": 10, "name": "sky", "type": "mask" },
+        { "id": 11, "name": "person", "type": "mask" },
+        { "id": 12, "name": "rider", "type": "mask" },
+        { "id": 13, "name": "car", "type": "mask" },
+        { "id": 14, "name": "truck", "type": "mask" },
+        { "id": 15, "name": "bus", "type": "mask" },
+        { "id": 16, "name": "train", "type": "mask" },
+        { "id": 17, "name": "motorcycle", "type": "mask" },
+        { "id": 18, "name": "bicycle", "type": "mask" }
+      ]
+
+spec:
+  description: SAM 3 concept segmentation via Modal GPU (text = label names)
+  runtime: "python:3.10"
+  handler: main:handler
+  eventTimeout: 180s
+  env:
+    - name: SAM3_MODAL_TEXT_URL
+      value: ""
+    - name: MODAL_PROXY_KEY
+      value: ""
+    - name: MODAL_PROXY_SECRET
+      value: ""
+    - name: SAM3_TIMEOUT_SEC
+      value: "170"
+
+  build:
+    image: cvat.pth.modal.sam3.detector
+    baseImage: ubuntu:22.04
+    directives:
+      preCopy:
+        - kind: ENV
+          value: DEBIAN_FRONTEND=noninteractive
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: apt-get update && apt-get install -y --no-install-recommends python3 python3-pip python-is-python3 && rm -rf /var/lib/apt/lists/*
+        - kind: RUN
+          value: pip3 install --no-cache-dir requests pyyaml
+        - kind: RUN
+          value: "mkdir -p /opt/nuclio/whl && pip3 download msgpack -d /opt/nuclio/whl"
+
+  triggers:
+    myHttpTrigger:
+      numWorkers: 1
+      kind: http
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume

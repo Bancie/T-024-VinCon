@@ -33,7 +33,8 @@ Thêm tool thì thêm một dòng vào bảng:
 
 | Tool | Giải quyết | Người viết | Trạng thái |
 |---|---|---|---|
-| *(chưa có)* |  |  |  |
+| [gpu_integrate](gpu_integrate/) | SAM 3 trên GPU Modal, gắn CVAT local qua Nuclio (không đụng SAM vit-h) | đội | sẵn dùng |
+| [delete-all-label](delete-all-label/) | Xoá hết shape/tag trên một frame CVAT local, không đụng track | đội | sẵn dùng |
 
 ## Mẫu README cho từng tool
 
